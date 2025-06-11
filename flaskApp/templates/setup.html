@@ -1,0 +1,131 @@
+<!-- The initial page with fields for num_players and num_items -->
+
+{% extends "layout.html" %}
+{% block content %}
+
+<!-- The article & about me -->
+  <div class="w-100 d-flex justify-content-between mb-3">
+    <!-- About Me -->
+    <button
+      type="button"
+      class="btn explanation-text"
+      data-bs-toggle="modal"
+      data-bs-target="#aboutModal"
+    >
+      About Me
+    </button>
+    <!-- The Article -->
+    <a
+      href="{{ url_for('static', filename='Santa Claus Meets Hypergraph Matchings.pdf') }}"
+      class="btn explanation-text"
+      target="_blank"
+    >
+      The Article
+    </a>
+  </div>
+
+  <div class="container mx-auto" style="max-width:900px;">
+
+  <!-- Full-page snowflake background -->
+  <style>
+    body {
+      background-image: url('{{ url_for('static', filename='images/snowflake.png') }}');
+      background-repeat: repeat;
+      background-size: auto;
+    }
+  </style>
+
+  <!-- Algorithm explanation in matching style -->
+  <div id="algorithmExplanationMessage" class="text-center mb-4" style="color:#FF0000; font-family:'Pacifico', cursive; font-size:1.5rem; font-weight:normal;">
+    This algorithm is designed to maximize the minimum value each participant receives, ensuring as fair a distribution of Santa’s gifts as possible.
+    The solution uses a bipartite hypergraph to find a perfect matching that respects the valuations.
+    To run the algorithm, enter the number of players and gifts and click “Next.”
+  </div>
+
+  <div class="d-flex align-items-center">
+    <!-- Form on the left -->
+    <div class="flex-grow-1 pe-3">
+      <form method="POST" action="{{ url_for('setup') }}">
+        <div class="mb-3">
+          <label for="num_players" class="form-label">Number of Players</label>
+          <input
+            type="number"
+            class="form-control form-control-lg"
+            id="num_players"
+            name="num_players"
+            min="1"
+            required>
+        </div>
+        <div class="mb-3">
+          <label for="num_items" class="form-label">Number of Gifts</label>
+          <input
+            type="number"
+            class="form-control form-control-lg"
+            id="num_items"
+            name="num_items"
+            min="1"
+            required>
+        </div>
+        <button type="submit" class="btn btn-primary btn-lg w-100">Next</button>
+      </form>
+    </div>
+    <!-- Santa Claus and gifts image on the right -->
+    <div class="flex-shrink-0">
+      <img
+        src="{{ url_for('static', filename='images/santa_gifts.png') }}"
+        alt="Santa Claus and Gifts"
+        class="img-fluid"
+        style="max-height: 300px;">
+    </div>
+  </div>
+
+    <!-- About Me Modal -->
+  <div
+    class="modal fade"
+    id="aboutModal"
+    tabindex="-1"
+    aria-labelledby="aboutModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content text-dark">
+        <div class="modal-header">
+          <h5 class="modal-title" id="aboutModalLabel">About Me</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body text-start">
+          <p>
+            Hello,<br>
+            I’m <strong>May Rozen</strong>, currently completing my third year of a B.Sc. in Computer Science at Ariel University.<br>
+            I serve in the reserves as a C4I Communications Officer in the Home Front Command and work as a Python instructor for the children’s programming club <strong>MindPlay</strong>.<br>
+            I have a strong passion for Machine Learning and AI; I recently completed a Deep Learning & Neural Networks course on the Learning AI platform and I’m working on some related projects.
+          </p>
+
+          <br>
+
+          <h6>Links</h6>
+          <ul class="ps-0">
+            <li><a href="https://github.com/MayRozen" target="_blank">GitHub</a></li>
+            <li><a href="https://www.linkedin.com/in/may-rozen-4b07bb324?" target="_blank">LinkedIn</a></li>
+            <li><a href="mailto:mayrozen45@gmail.com">mayrozen45@gmail.com</a></li>
+          </ul>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}

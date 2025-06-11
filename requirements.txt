@@ -1,0 +1,9 @@
+fairpyx
+hypernetx
+cvxpy
+dotenv
+wtforms
+Flask
+gunicorn
+numpy
+pandas
