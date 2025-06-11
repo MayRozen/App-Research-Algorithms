@@ -1,0 +1,3 @@
+[submodule "fairpyx"]
+	path = fairpyx
+	url = https://github.com/ariel-research/fairpyx.git
