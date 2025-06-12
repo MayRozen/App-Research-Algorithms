@@ -1,4 +1,4 @@
-fairpyx
+git+https://github.com/ariel-research/fairpyx.git@refs/pull/42/head#egg=fairpyx
 hypernetx
 cvxpy
 dotenv
