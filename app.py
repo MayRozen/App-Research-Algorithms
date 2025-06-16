@@ -1,4 +1,5 @@
 # Running the server
+# need to run in terminal: export FLASK_RUN_PORT=5123
 
 import dotenv, os
 dotenv.load_dotenv()  # load FLASK_RUN_PORT
