@@ -62,20 +62,15 @@ def run_algorithm():
             valuations[p][g] = v
 
     # build and run
-    agent_caps = {
-        p: sum(1 for v in valuations[p].values() if v > 0)
-        for p in players
-    }
-    item_caps = {
-        g: max(valuations[p][g] for p in players)
-        for g in items
-    }
+    agent_caps = {p: num_items for p in players}
+    item_caps = {g: 1 for p in players}
 
     instance   = Instance(
         valuations=valuations,
         agent_capacities=agent_caps,
         item_capacities=item_caps
     )
+    print(instance)
     builder    = AllocationBuilder(instance=instance)
     final_alloc = santa_claus_main(builder) # Running the algorithm
 
