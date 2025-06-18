@@ -63,7 +63,7 @@ def run_algorithm():
 
     # build and run
     agent_caps = {p: num_items for p in players}
-    item_caps = {g: 1 for g in items}
+    item_caps = {g: num_players for g in items}
 
     instance   = Instance(
         valuations=valuations,
