@@ -62,15 +62,12 @@ def run_algorithm():
             valuations[p][g] = v
 
     # build and run
-    agent_caps = {
-        p: sum(1 for v in valuations[p].values() if v > 0)
-        for p in players
-    }
+    agent_caps = {p: num_items for p in players}
     item_caps = {g: 1 for g in items}
 
     instance   = Instance(
         valuations=valuations,
-        agent_capacities=agent_caps,
+        #agent_capacities=agent_caps,
         item_capacities=item_caps
     )
     builder    = AllocationBuilder(instance=instance)
