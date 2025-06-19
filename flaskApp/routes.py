@@ -62,16 +62,19 @@ def run_algorithm():
             valuations[p][g] = v
 
     # build and run
-    import math
-    cap_per_player = math.floor(num_items / num_players)
-    agent_caps = {p: cap_per_player for p in players}
+    # build and run עם Lower & Upper bounds
+    # 1) לכל סוכן תקרה רחבה (אין הגבלה אמיתית)
+    agent_caps = {p: num_items for p in players}
+    # 2) לכל סוכן entitlement מינימלי של 1 פריט
+    agent_ents = {p: 1 for p in players}
+    # 3) כל פריט ניתן פעם אחת
     item_caps = {g: 1 for g in items}
 
-    instance   = Instance(
-        valuations=valuations,
-        agent_capacities=agent_caps,
-        item_capacities=item_caps
-    )
+    instance = Instance(
+        valuations = valuations,
+        agent_capacities = agent_caps,
+        agent_entitlements = agent_ents,
+        item_capacities = item_caps)
     builder    = AllocationBuilder(instance=instance)
     final_alloc = santa_claus_main(builder) # Running the algorithm
 
