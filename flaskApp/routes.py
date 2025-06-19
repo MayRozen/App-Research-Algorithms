@@ -74,7 +74,7 @@ def run_algorithm():
     final_alloc = santa_claus_main(builder) # Running the algorithm
 
     algo_logger.removeHandler(stream_handler)
-    logs = log_stream.getvalue().splitlines()
+    logs = log_stream.getvalue()
     last_line = logs[-1] # לקיחת השורה האחרונה בלוגים
     start = last_line.find("{") # תחילת כתיבת ההקצאות
     dict_str = last_line[start:] # עד סוף ההקצאות
