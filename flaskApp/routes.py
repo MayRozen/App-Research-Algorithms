@@ -76,14 +76,22 @@ def run_algorithm():
     # וכבר בנית את ה־logs:
     algo_logger.removeHandler(stream_handler)
     logs = log_stream.getvalue().splitlines()
-    
-    # ───── לחלץ את השידוך הסופי מהלוג האחרון ─────
-    last_line = logs[-1].strip()
-    # לנתק את החלק של “INFO” (התאריך והרמה)
-    msg = last_line.split(" - INFO - ", 1)[1]
-    # לקחת את החלק שמתחיל אחרי “: ”
+
+    # ───── לחלץ את השידוך הסופי מתוך הלוג של Final matching ─────
+    logs = [l for l in logs if l.strip()]  # מסניפת שורות ריקות
+    match_line = next(
+        (l for l in reversed(logs) if "Final matching found at threshold" in l),
+        None
+    )
+    if match_line is None:
+        flash("האלגוריתם לא פלט שידוך סופי בלוג", "danger")
+        return redirect(url_for("setup"))
+    # מפרידים את החלק אחרי 'INFO'
+    msg = match_line.split(" - INFO - ", 1)[1]
+    # ואת החלק אחרי ': ' כדי לקבל את ה־dict כמחרוזת
     dict_str = msg.split(": ", 1)[1]
     algorithm_matching = ast.literal_eval(dict_str)
+
     return render_template(
         "result.html",
         allocation=final_alloc,
