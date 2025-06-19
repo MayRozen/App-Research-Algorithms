@@ -76,30 +76,8 @@ def run_algorithm():
     algo_logger.removeHandler(stream_handler)
     logs = log_stream.getvalue().splitlines()
 
-    import re, ast  # וודאי שה־importים האלה נמצאים בתחילת הקובץ
-
-    # מסניפת שורות ריקות
-    logs = [l for l in logs if l.strip()]
-
-    # מוצאים את השורה האחרונה שמכילה את הפלט של האלגוריתם
-    match_line = next((l for l in reversed(logs) if "Final matching found" in l), None)
-    if not match_line:
-        flash("האלגוריתם לא פלט תוצאה בלוג", "danger")
-        return redirect(url_for("setup"))
-
-    # באמצעות Regex חותכים את המילון מהמחרוזת
-    m = re.search(r"(\{.*\})", match_line)
-    if not m:
-        flash("לא נמצא מילון בשורת הלוג של התוצאה", "danger")
-        return redirect(url_for("setup"))
-
-    # מפענחים חזרה ל־dict
-    algorithm_matching = ast.literal_eval(m.group(1))
-
     return render_template(
         "result.html",
         allocation=final_alloc,
-        algorithm_matching=algorithm_matching,
         logs=logs
     )
-
