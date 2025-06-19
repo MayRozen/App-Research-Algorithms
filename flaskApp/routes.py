@@ -7,6 +7,7 @@ from fairpyx.allocations import AllocationBuilder
 
 import logging,io
 from logging import StreamHandler
+import ast
 
 logger = logging.getLogger(__name__)
 
@@ -62,27 +63,30 @@ def run_algorithm():
             valuations[p][g] = v
 
     # build and run
-    # build and run עם Lower & Upper bounds
-    # 1) לכל סוכן תקרה רחבה (אין הגבלה אמיתית)
     agent_caps = {p: num_items for p in players}
-    # 2) לכל סוכן entitlement מינימלי של 1 פריט
-    agent_ents = {p: 1 for p in players}
-    # 3) כל פריט ניתן פעם אחת
     item_caps = {g: 1 for g in items}
 
-    instance = Instance(
-        valuations = valuations,
-        agent_capacities = agent_caps,
-        agent_entitlements = agent_ents,
-        item_capacities = item_caps)
+    instance   = Instance(
+        valuations=valuations,
+        agent_capacities=agent_caps,
+        item_capacities=item_caps
+    )
     builder    = AllocationBuilder(instance=instance)
-    final_alloc = santa_claus_main(builder) # Running the algorithm
-
+    final_alloc = santa_claus_main(builder)
+    # וכבר בנית את ה־logs:
     algo_logger.removeHandler(stream_handler)
     logs = log_stream.getvalue().splitlines()
-
+    
+    # ───── לחלץ את השידוך הסופי מהלוג האחרון ─────
+    last_line = logs[-1].strip()
+    # לנתק את החלק של “INFO” (התאריך והרמה)
+    msg = last_line.split(" - INFO - ", 1)[1]
+    # לקחת את החלק שמתחיל אחרי “: ”
+    dict_str = msg.split(": ", 1)[1]
+    algorithm_matching = ast.literal_eval(dict_str)
     return render_template(
         "result.html",
         allocation=final_alloc,
+        algorithm_matching=algorithm_matching,
         logs=logs
     )
