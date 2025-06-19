@@ -62,10 +62,9 @@ def run_algorithm():
             valuations[p][g] = v
 
     # build and run
-    agent_caps = {
-        p: sum(1 for v in valuations[p].values() if v > 0) # sum the number of gifts p1 has
-        for p in players
-    }
+    import math
+    cap_per_player = math.floor(num_items / num_players)
+    agent_caps = {p: cap_per_player for p in players}
     item_caps = {g: 1 for g in items}
 
     instance   = Instance(
