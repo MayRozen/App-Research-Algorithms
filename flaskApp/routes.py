@@ -75,9 +75,14 @@ def run_algorithm():
 
     algo_logger.removeHandler(stream_handler)
     logs = log_stream.getvalue().splitlines()
+    last_line = logs[-1] # לקיחת השורה האחרונה בלוגים
+    start = last_line.find("{") # תחילת כתיבת ההקצאות
+    dict_str = last_line[start:] # עד סוף ההקצאות
+    import ast
+    algorithm_matching = ast.literal_eval(dict_str) # הכנסה לפורמט מתאים
 
     return render_template(
         "result.html",
-        allocation=final_alloc,
+        allocation=algorithm_matching,
         logs=logs
     )
