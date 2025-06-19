@@ -74,15 +74,8 @@ def run_algorithm():
     final_alloc = santa_claus_main(builder) # Running the algorithm
 
     algo_logger.removeHandler(stream_handler)
-    logs = log_stream.getvalue().splitlines()
+    logs = log_stream.getvalue().split('\n')
 
-    enhanced_logs = []
-    for line in logs:
-        if "Binary search step" in line:
-            enhanced_logs.append("")  # שורה ריקה
-        enhanced_logs.append(line)
-    logs = enhanced_logs
-    
     last_line = logs[-1] # לקיחת השורה האחרונה בלוגים
     start = last_line.find("{") # תחילת כתיבת ההקצאות
     dict_str = last_line[start:] # עד סוף ההקצאות
