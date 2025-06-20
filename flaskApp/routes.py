@@ -74,7 +74,22 @@ def run_algorithm():
     final_alloc = santa_claus_main(builder) # Running the algorithm
 
     algo_logger.removeHandler(stream_handler)
-    logs = log_stream.getvalue().splitlines()
+    logs = log_stream.getvalue()
+
+    # פיצול לפי שורות (שומרים גם שורות ריקות)
+    lines = raw.split('\n')
+
+    # נוציא רשימה חדשה שבה אחרי כל כותרת 'Binary search step' יתוסף
+    # שתי שורות ריקות, ובכל מקרה נשמור את כל השורות
+    enhanced = []
+    for line in lines:
+        enhanced.append(line)
+        if line.startswith("==== Binary search step"):
+            enhanced.append("")  # שורה ריקה ראשונה
+            enhanced.append("")  # שורה ריקה שנייה
+
+    # נעבור חזרה למחרוזת יחידה עם newlines
+    logs = "\n".join(enhanced)
 
     last_line = logs[-1] # לקיחת השורה האחרונה בלוגים
     start = last_line.find("{") # תחילת כתיבת ההקצאות
