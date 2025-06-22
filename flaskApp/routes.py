@@ -92,7 +92,7 @@ def run_algorithm():
                 val = valuations[p][g]
                 break
         gift_values[g] = val
-        
+
     sum_values = {
         player: sum(gift_values[g] for g in gifts)
         for player, gifts in algorithm_matching.items()
