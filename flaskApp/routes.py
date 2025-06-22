@@ -81,9 +81,16 @@ def run_algorithm():
     dict_str = last_line[start:] # עד סוף ההקצאות
     import ast
     algorithm_matching = ast.literal_eval(dict_str) # הכנסה לפורמט מתאים
-    
+
+    # חשב סכום ערכים לכל שחקן
+    sum_values = {
+        player: sum(gift_values[g] for g in gifts)
+        for player, gifts in allocation.items()
+    }
+
     return render_template(
         "result.html",
         allocation=algorithm_matching,
+        sum_values=sum_values,
         logs=logs
     )
