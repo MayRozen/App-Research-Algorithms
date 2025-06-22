@@ -82,6 +82,17 @@ def run_algorithm():
     import ast
     algorithm_matching = ast.literal_eval(dict_str) # הכנסה לפורמט מתאים
 
+    # items = רשימת כל המתנות, players = רשימת כל השחקנים
+    gift_values = {}
+    for g in items:
+        # חפש שחקן ראשון שמעריך את g בערך לא אפס
+        val = 0.0
+        for p in players:
+            if valuations[p].get(g, 0.0) != 0.0:
+                val = valuations[p][g]
+                break
+        gift_values[g] = val
+        
     sum_values = {
         player: sum(gift_values[g] for g in gifts)
         for player, gifts in algorithm_matching.items()
