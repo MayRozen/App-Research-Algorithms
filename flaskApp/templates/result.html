@@ -27,13 +27,14 @@
         <button
           type="button"
           class="btn btn-primary btn-sm"
-          onclick="alert('Total value for {{ player }}: {{ value_sums[player]|round(2) }}')"
+          onclick='alert("Total value for {{ player }}: {{ value_sums[player]|round(2) }}")'
         >
           Value
         </button>
       </li>
     {% endfor %}
   </ul>
+
 
   <a href="{{ url_for('setup') }}" class="btn btn-link mt-3">Start Over</a>
 
