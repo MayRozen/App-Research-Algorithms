@@ -29,22 +29,26 @@
       {% endfor %}
     </ul>
 
-    <!-- Right: העמודת כפתורי הסכום -->
-    <div class="ms-4">
-      {% for player in allocation.keys() %}
-        <button
-          type="button"
-          class="explanation-text btn btn-sm mb-2"
-          style="
-            font-size: 1rem;                           /* גודל כמו P1 */
-            background-color: #fff;                    /* רקע לבן כמו list-group-item */
-          "
-          onclick="alert('Total value for {{ player }}: {{ sum_values[player] }}');"
-        >
-          Sum of Values for {{ player }}
-        </button>
+    <button
+    class="explanation-text btn mb-4"
+    type="button"
+    data-bs-toggle="collapse"
+    data-bs-target="#sumList"
+    aria-expanded="false"
+    aria-controls="sumList"
+  >
+    Show Sum of Values
+  </button>
+
+  <!-- כאן נופיעות הסכומים כשהכפתור נלחץ -->
+  <div class="collapse" id="sumList">
+    <ul class="list-group mb-4">
+      {% for player, total in sum_values.items() %}
+        <li class="list-group-item">
+          {{ player }} → {{ total }}
+        </li>
       {% endfor %}
-    </div>
+    </ul>
   </div>
 
   <a href="{{ url_for('setup') }}" class="btn btn-link mt-3">Start Over</a>
