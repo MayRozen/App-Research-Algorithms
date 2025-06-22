@@ -20,8 +20,17 @@
 
   <ul class="list-group">
     {% for player, gifts in allocation.items() %}
-      <li class="list-group-item">
-        {{ player }} → {{ gifts|join(", ") }}
+      <li class="list-group-item d-flex justify-content-between align-items-center">
+        <div>
+          <strong>{{ player }}</strong> → {{ gifts|join(", ") }}
+        </div>
+        <button
+          type="button"
+          class="btn btn-primary btn-sm"
+          onclick="alert('Total value for {{ player }}: {{ value_sums[player]|round(2) }}')"
+        >
+          Value
+        </button>
       </li>
     {% endfor %}
   </ul>
