@@ -24,17 +24,12 @@
         <div>
           <strong>{{ player }}</strong> → {{ gifts|join(", ") }}
         </div>
-        <button
-          type="button"
-          class="btn btn-primary btn-sm"
-          onclick='alert("Total value for {{ player }}: {{ value_sums[player]|round(2) }}")'
-        >
-          Value
-        </button>
+        <span class="badge bg-primary rounded-pill">
+          Total value: {{ value_sums[player]|round(2) }}
+        </span>
       </li>
     {% endfor %}
   </ul>
-
 
   <a href="{{ url_for('setup') }}" class="btn btn-link mt-3">Start Over</a>
 
