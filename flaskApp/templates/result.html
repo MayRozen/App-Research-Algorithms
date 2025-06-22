@@ -34,7 +34,8 @@
       {% for player in allocation.keys() %}
         <button
           type="button"
-          class="explanation-text btn mb-4"
+          class="explanation-text btn btn-primary btn-sm mb-2"
+          style="font-size: 1rem;"
           onclick="alert('Total value for {{ player }}: {{ sum_values[player] }}');">
           Sum of Values for {{ player }}
         </button><br>
