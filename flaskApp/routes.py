@@ -46,11 +46,6 @@ def run_algorithm():
         flash("Session expired—please start over.", "warning")
         return redirect(url_for("setup"))
 
-    # check - no more players than items
-    if num_players > num_items:
-        flash("Cannot enter more players than items.", "danger")
-        return redirect(url_for("setup"))
-
     # Reads the number of players and items from the form
     players = [f"P{i}" for i in range(1, num_players+1)]
     items   = [f"G{j}" for j in range(1, num_items+1)]
@@ -76,16 +71,9 @@ def run_algorithm():
         item_capacities=item_caps
     )
     builder    = AllocationBuilder(instance=instance)
-    final_alloc = santa_claus_main(builder) # Running the algorithm
-
+    algorithm_matching = santa_claus_main(builder)
     algo_logger.removeHandler(stream_handler)
     logs = log_stream.getvalue().splitlines()
-
-    last_line = logs[-1] # Taking the last line from logs
-    start = last_line.find("{") # Beginning of writing allocations
-    dict_str = last_line[start:]
-    import ast
-    algorithm_matching = ast.literal_eval(dict_str) # Input into a suitable format
 
     # items = list of all gifts, players = list of all players
     gift_values = {}
