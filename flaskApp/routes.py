@@ -46,6 +46,11 @@ def run_algorithm():
         flash("Session expired—please start over.", "warning")
         return redirect(url_for("setup"))
 
+    # check - no more players than items
+    if num_players > num_items:
+        flash("Cannot enter more players than items.", "danger")
+        return redirect(url_for("setup"))
+
     # Reads the number of players and items from the form
     players = [f"P{i}" for i in range(1, num_players+1)]
     items   = [f"G{j}" for j in range(1, num_items+1)]
@@ -76,16 +81,16 @@ def run_algorithm():
     algo_logger.removeHandler(stream_handler)
     logs = log_stream.getvalue().splitlines()
 
-    last_line = logs[-1] # לקיחת השורה האחרונה בלוגים
-    start = last_line.find("{") # תחילת כתיבת ההקצאות
-    dict_str = last_line[start:] # עד סוף ההקצאות
+    last_line = logs[-1] # Taking the last line from logs
+    start = last_line.find("{") # Beginning of writing allocations
+    dict_str = last_line[start:]
     import ast
-    algorithm_matching = ast.literal_eval(dict_str) # הכנסה לפורמט מתאים
+    algorithm_matching = ast.literal_eval(dict_str) # Input into a suitable format
 
-    # items = רשימת כל המתנות, players = רשימת כל השחקנים
+    # items = list of all gifts, players = list of all players
     gift_values = {}
     for g in items:
-        # חפש שחקן ראשון שמעריך את g בערך לא אפס
+        # Find the first player who evaluates g to a non-zero value
         val = 0.0
         for p in players:
             if valuations[p].get(g, 0.0) != 0.0:
