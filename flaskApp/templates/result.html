@@ -20,11 +20,11 @@
 
   <!-- flex container: left=list, right=buttons -->
   <div class="d-flex justify-content-center align-items-start">
-    <!-- Left: רשימת השחקנים והמתנות -->
+    <!-- Left: players and gifts list -->
     <ul class="list-group">
       {% for player, gifts in allocation.items() %}
         <li class="list-group-item">
-          {{ player }} → {{ gifts|join(", ") }}
+          {{ player }} → {{ gifts|sort|join(', ') }}
         </li>
       {% endfor %}
     </ul>
@@ -40,7 +40,7 @@
     Show Sum of Values
   </button>
 
-  <!-- כאן נופיעות הסכומים כשהכפתור נלחץ -->
+  <!-- the sum-values -->
   <div class="collapse" id="sumList">
     <ul class="list-group mb-4">
       {% for player, total in sum_values.items() %}
