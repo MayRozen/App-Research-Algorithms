@@ -42,6 +42,14 @@
     To run the algorithm, enter the number of players and gifts and click “Next.”
   </div>
 
+  <!-- Error message when players > items -->
+  <div
+    id="constraintErrorMessage"
+    class="text-danger mb-3"
+    style="display: none;"
+  >
+    Cannot enter more players than items.
+  </div>
   <div class="d-flex align-items-center">
     <!-- Form on the left -->
     <div class="flex-grow-1 pe-3">
@@ -66,7 +74,9 @@
             min="1"
             required>
         </div>
-        <button type="submit" class="btn btn-primary btn-lg w-100">Next</button>
+        <button id="nextBtn" type="submit" class="btn btn-primary btn-lg w-100" disabled>
+          Next
+        </button>
       </form>
     </div>
     <!-- Santa Claus and gifts image on the right -->
@@ -126,6 +136,33 @@
         </div>
       </div>
     </div>
-  </div>
 
+  <!-- Client-side validation script for setup page -->
+  <script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const playersIn = document.getElementById('num_players');
+    const itemsIn   = document.getElementById('num_items');
+    const nextBtn   = document.getElementById('nextBtn');
+    const errorDiv  = document.getElementById('constraintErrorMessage');
+
+    function validate() {
+      const p = parseInt(playersIn.value) || 0;
+      const i = parseInt(itemsIn.value)   || 0;
+      const ok = (p >= 1 && i >= 1 && p <= i);
+
+      if (ok) {
+        errorDiv.style.display = 'none';
+        nextBtn.disabled = false;
+      } else {
+        errorDiv.style.display = (p > i ? 'block' : 'none');
+        nextBtn.disabled = true;
+      }
+    }
+
+    playersIn.addEventListener('input', validate);
+    itemsIn.addEventListener('input', validate);
+    validate();
+  });
+  </script>
+</div>
 {% endblock %}
