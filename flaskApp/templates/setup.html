@@ -142,27 +142,35 @@
   <!-- Client-side validation script for setup page -->
   <script>
   document.addEventListener('DOMContentLoaded', () => {
-    const playersIn = document.getElementById('num_players');
-    const itemsIn   = document.getElementById('num_items');
-    const nextBtn   = document.getElementById('nextBtn');
-    const errorDiv  = document.getElementById('constraintErrorMessage');
+    const playersInput = document.getElementById('num_players');
+    const itemsInput   = document.getElementById('num_items');
+    const nextBtn      = document.getElementById('nextBtn');
+    const errorDiv     = document.getElementById('constraintErrorMessage');
 
     function validate() {
-      const p = parseInt(playersIn.value) || 0;
-      const i = parseInt(itemsIn.value)   || 0;
-      const ok = (p >= 1 && i >= 1 && p <= i);
+      const numPlayers = parseInt(playersInput.value) || 0;
+      const numItems   = parseInt(itemsInput.value) || 0;
 
-      if (ok) {
-        errorDiv.style.display = 'none';
+      // Check if values are valid
+      const valid = (numPlayers >= 1 && numItems >= 1 && numPlayers <= numItems);
+
+      if (valid) {
         nextBtn.disabled = false;
+        errorDiv.style.display = 'none';
+        playersInput.classList.remove('is-invalid');
+        itemsInput.classList.remove('is-invalid');
       } else {
-        errorDiv.style.display = (p > i ? 'block' : 'none');
         nextBtn.disabled = true;
+        errorDiv.style.display = (numPlayers > numItems ? 'block' : 'none');
+        playersInput.classList.add('is-invalid');
+        itemsInput.classList.add('is-invalid');
       }
     }
 
-    playersIn.addEventListener('input', validate);
-    itemsIn.addEventListener('input', validate);
+    playersInput.addEventListener('input', validate);
+    itemsInput.addEventListener('input', validate);
+
+    // Initial validation
     validate();
   });
   </script>
