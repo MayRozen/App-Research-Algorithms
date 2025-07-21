@@ -2,17 +2,6 @@
 
 {% extends "layout.html" %}
 {% block content %}
-<!-- Page-specific CSS to hide number-input spinners -->
-<style>
-  input[type=number]::-webkit-outer-spin-button,
-  input[type=number]::-webkit-inner-spin-button {
-      -webkit-appearance: none;
-      margin: 0;
-  }
-  input[type=number] {
-      -moz-appearance: textfield;
-  }
-</style>
 <div class="container mx-auto" style="max-width:900px; color:#FF0000; text-align:center;">
 
   <!-- Constraint explanation -->
@@ -43,14 +32,14 @@
           <tr>
             <th></th>
             {% for j in range(1, num_items+1) %}
-              <th class="fs-5">G{{ j }}</th>
+              <th class="fs-5">c{{ j }}</th>
             {% endfor %}
           </tr>
         </thead>
         <tbody>
           {% for i in range(1, num_players+1) %}
             <tr>
-              <th class="fs-6 align-middle">P{{ i }}</th>
+              <th class="fs-6 align-middle">Player_{{ i }}</th>
               {% for j in range(1, num_items+1) %}
                 <td>
                   <input
@@ -60,7 +49,7 @@
                     class="form-control form-control-lg"
                     required
                     placeholder="Value"
-                    value="{{ previous_vals['P'~i]['G'~j] if previous_vals else '' }}"
+                    value="{{ previous_vals['Player_'~i]['c'~j] if previous_vals else '' }}"
                   >
                 </td>
               {% endfor %}
