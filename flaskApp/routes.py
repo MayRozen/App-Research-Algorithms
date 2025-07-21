@@ -72,6 +72,7 @@ def run_algorithm():
     )
     builder    = AllocationBuilder(instance=instance)
     algorithm_matching = santa_claus_main(builder)
+    allocation = builder.sorted()
     algo_logger.removeHandler(stream_handler)
     logs = log_stream.getvalue().splitlines()
 
@@ -88,12 +89,12 @@ def run_algorithm():
 
     sum_values = {
         player: sum(gift_values[g] for g in gifts)
-        for player, gifts in algorithm_matching.items()
+        for player, gifts in allocation.items()
     }
 
     return render_template(
         "result.html",
-        allocation=algorithm_matching,
-        sum_values=sum_values,
-        logs=logs
+        allocation=allocation,
+        sum_values = sum_values,
+        logs = logs
     )
