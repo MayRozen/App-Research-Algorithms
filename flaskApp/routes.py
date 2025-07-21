@@ -49,7 +49,7 @@ def run_algorithm():
 
     # Reads the number of players and items from the form
     players = [f"Player_{i}" for i in range(1, num_players+1)]
-    items   = [f"G{j}" for j in range(1, num_items+1)]
+    items   = [f"c{j}" for j in range(1, num_items+1)]
 
     # build valuations dict (each gift its own value)
     valuations = {p: {} for p in players}
