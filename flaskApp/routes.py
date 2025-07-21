@@ -4,6 +4,7 @@ from flaskApp import app
 from fairpyx.algorithms.santa_algorithm import santa_claus_main , logger as algo_logger
 from fairpyx.instances import Instance
 from fairpyx.allocations import AllocationBuilder
+from fairpyx import divide
 
 import logging,io
 from logging import StreamHandler
@@ -70,9 +71,10 @@ def run_algorithm():
         agent_capacities=agent_caps,
         item_capacities=item_caps
     )
-    builder    = AllocationBuilder(instance=instance)
-    algorithm_matching = santa_claus_main(builder)
-    allocation = builder.sorted()
+    allocation = divide(
+        algorithm = santa_claus_main,
+        instance = instance
+    )
     algo_logger.removeHandler(stream_handler)
     logs = log_stream.getvalue().splitlines()
 
