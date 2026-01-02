@@ -19,9 +19,9 @@ Given:
 
 Goal: allocate items so that the **least happy player is as happy as possible**, i.e. maximize:
 
-\[
+$$
 \max \ \min_i \sum_{j \in S_i} v_{i,j}
-\]
+$$
 
 ---
 
