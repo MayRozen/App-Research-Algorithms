@@ -25,7 +25,7 @@ $$
 
 ---
 
-## Algorithm (High-Level Overview)
+## Algorithm Overview
 
 This project follows the approach from the paper **“Santa Claus Meets Hypergraph Matchings”**:
 
