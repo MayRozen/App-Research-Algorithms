@@ -49,7 +49,7 @@ In practice, this produces an allocation that is guaranteed (theoretically) to b
 The website is designed to be simple and interactive:
 
 1. **Home screen**: choose the number of players and gifts (with validation: players ≤ items).
-2. **Valuation input**: fill a matrix where each row is a player and each column is an item.
+2. **Valuation input**: fill a matrix where each row is a player and each column is an item.  
 **Note (restricted-assignment input):** each gift has a fixed value (e.g., 10).  
 For any player, that gift is either **available** (enter the fixed value) or **not available** (enter **0**).  
 So players do not choose arbitrary values per gift — each cell is either the gift’s value or 0.
