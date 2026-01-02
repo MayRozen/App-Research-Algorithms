@@ -31,7 +31,9 @@ This project follows the approach from the paper **“Santa Claus Meets Hypergra
 
 1. **Choose a threshold `t`** and ask: “Can every player receive value ≥ `t`?”
 2. Solve a **Configuration LP** (a relaxation that allows fractional assignments).
-3. Convert the fractional solution into a structured form (conceptually: **fat / thin** items and minimal bundles).
+3. Convert the fractional solution into a structured form by classifying items relative to the threshold `t`:
+- **Fat item:** an item that alone gives a player value ≥ `t`.
+- **Thin item:** an item with value < `t`, so players need a **bundle** of thin items to reach `t` (often using an inclusion-minimal bundle).
 4. Build a **bipartite hypergraph**:
    - Left side: players  
    - Right side: items  
