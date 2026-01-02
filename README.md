@@ -78,7 +78,8 @@ So players do not choose arbitrary values per gift — each cell is either the g
 - **Upstream `fairpyx` (official / main):**  
   https://github.com/ariel-research/fairpyx
   
-- **Paper (DOI):** [Santa Claus Meets Hypergraph Matchings](https://doi.org/10.1145/2229163.2229168)
+- **Paper (DOI):**  
+  [Santa Claus Meets Hypergraph Matchings](https://doi.org/10.1145/2229163.2229168)
 ---
 
 ## Installation (Algorithm Library)
