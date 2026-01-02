@@ -5,7 +5,7 @@ Live demo: **https://mayrozen45.csariel.xyz/**
 This repository contains the **web application** (Flask + JavaScript + HTML/CSS) for running and visualizing an implementation of the **Santa Claus / Max–Min Fair Allocation** algorithm.  
 Users enter a valuation matrix (how much each player values each item), and the app computes an allocation that aims to **maximize the minimum total value** received by any player.
 
-> 📌 **Note:** The algorithm implementation is maintained as part of the **`fairpyx`** Python library (created by my instructor).  
+> 📌 **Note:** The algorithm implementation is maintained as part of the **`fairpyx`** Python library.  
 > This repo is the **website + UI layer** that calls the algorithm.
 
 ---
