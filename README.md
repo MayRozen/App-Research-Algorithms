@@ -84,7 +84,26 @@ So players do not choose arbitrary values per gift — each cell is either the g
 
 ## Installation (Algorithm Library)
 
-You can install the `fairpyx` library via pip:
+The Santa Claus algorithm is provided by the `fairpyx` Python library.
+
+### Public release (PyPI)
+You can install the published version via pip:
 
 ```bash
 pip install fairpyx
+```
+
+### Required for this project (includes the Santa algorithm)
+
+This web demo requires the latest fairpyx version from GitHub (the PyPI release does not yet include the Santa module):
+
+```bash
+pip install git+https://github.com/ariel-research/fairpyx.git
+```
+
+### Usage
+
+```bash
+from fairpyx.algorithms.santa_algorithm import santa_claus_main
+```
+
