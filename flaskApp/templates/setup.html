@@ -1,53 +1,38 @@
 <!-- The initial page with fields for num_players and num_items -->
 
 {% extends "layout.html" %}
+{% block body_class %}home{% endblock %}
 {% block content %}
 
 <!-- The article & about me -->
-  <div class="w-100 d-flex justify-content-between mb-3">
-    <!-- About Me -->
-    <button
-      type="button"
-      class="btn explanation-text"
-      data-bs-toggle="modal"
-      data-bs-target="#aboutModal"
-    >
-      About Me
-    </button>
-    <!-- The Article -->
-    <a
-      href="{{ url_for('static', filename='Santa Claus Meets Hypergraph Matchings.pdf') }}"
-      class="btn explanation-text"
-      target="_blank"
-    >
-      The Article
-    </a>
+  <div class="top-actions mb-3">
+    <div class="left">
+      <button type="button" class="back-btn" data-bs-toggle="modal" data-bs-target="#aboutModal">
+        About Me
+      </button>
+    </div>
+
+    <div></div>
+
+    <div class="right">
+      <a href="{{ url_for('static', filename='Santa Claus Meets Hypergraph Matchings.pdf') }}" class="back-btn" target="_blank">
+        The Article
+      </a>
+    </div>
   </div>
+
 
   <div class="container mx-auto" style="max-width:900px;">
 
-  <!-- Full-page snowflake background -->
-  <style>
-    body {
-      background-image: url('{{ url_for('static', filename='images/snowflake.png') }}');
-      background-repeat: repeat;
-      background-size: auto;
-    }
-  </style>
-
-  <!-- Algorithm explanation in matching style -->
-  <div id="algorithmExplanationMessage" class="text-center mb-4" style="color:#FF0000; font-family:'Pacifico', cursive; font-size:1.5rem; font-weight:normal;">
+  <!-- Algorithm explanation -->
+  <div id="algorithmExplanationMessage" class="explanation-text text-start mb-4">
     This algorithm is designed to maximize the minimum value each participant receives, ensuring as fair a distribution of Santa’s gifts as possible.
-    The solution uses a bipartite hypergraph to find a perfect matching that respects the valuations.
+    The solution uses a bipartite hypergraph to find a perfect matching that respects the valuations.</br>
     To run the algorithm, enter the number of players and gifts and click “Next.”
   </div>
 
   <!-- Error message when players > items -->
-  <div
-    id="constraintErrorMessage"
-    class="text-danger mb-3"
-    style="display: none;"
-  >
+  <div id="constraintErrorMessage" class="text-danger mb-3" style="display: none;">
     Cannot enter more players than items.
   </div>
   <div class="d-flex align-items-center">
@@ -62,6 +47,7 @@
             id="num_players"
             name="num_players"
             min="1"
+            max="10"
             required>
         </div>
         <div class="mb-3">
@@ -72,10 +58,12 @@
             id="num_items"
             name="num_items"
             min="1"
+            max="10"
             required>
         </div>
-        <button id="nextBtn" type="submit" class="btn btn-primary btn-lg w-100" disabled>
-          Next
+        <button id="nextBtn" type="submit" class="gift-btn action-btn" disabled>
+          <span>NEXT</span>
+          <img src="{{ url_for('static', filename='images/gifts.png') }}" alt="gifts">
         </button>
       </form>
     </div>
@@ -90,13 +78,10 @@
   </div>
 
     <!-- About Me Modal -->
-  <div
-    class="modal fade"
-    id="aboutModal"
-    tabindex="-1"
-    aria-labelledby="aboutModalLabel"
-    aria-hidden="true"
-  >
+  <div class="modal fade" id="aboutModal"
+     data-bs-backdrop="false"
+     data-bs-scroll="true"
+     tabindex="-1" aria-labelledby="aboutModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content text-dark">
         <div class="modal-header">
@@ -110,20 +95,39 @@
         </div>
         <div class="modal-body text-start">
           <p>
-            Hello,<br>
-            I’m <strong>May Rozen</strong>, currently completing my third year of a B.Sc. in Computer Science at Ariel University.<br>
-            I serve in the reserves as a C4I Communications Officer in the Home Front Command and work as a Python instructor for the children’s programming club <strong>MindPlay</strong>.<br>
-            I have a strong passion for Machine Learning and AI; I recently completed a Deep Learning & Neural Networks course on the Learning AI platform and I’m working on some related projects.
+            Hi, I’m <strong>May Rozen</strong>, a B.Sc. graduate in Computer Science <br class="br-desktop">from Ariel University.<br class="br-desktop"><br class="br-mobile">
+            I built this project as part of my “Research Algorithms” course, where we select an algorithm from a research paper and implement it
+            <br class="br-desktop">end-to-end — including performance optimizations and
+            <br class="br-desktop">a <br class="br-mobile">server-based web demo.<br class="br-desktop"><br class="br-mobile">
+            Recently, I’ve been focusing more on frontend development, <br class="br-desktop">so I refreshed the design and improved the overall usability
+            <br class="br-desktop">and performance.<br class="br-desktop"><br class="br-mobile">
+            The algorithm is also available as a Python package (installable via pip); installation and usage instructions are provided in the project <br class="br-mobile">README below.
           </p>
 
           <br>
 
-          <h6>Links</h6>
-          <ul class="ps-0">
-            <li><a href="https://github.com/MayRozen" target="_blank">GitHub</a></li>
-            <li><a href="https://www.linkedin.com/in/may-rozen-4b07bb324?" target="_blank">LinkedIn</a></li>
-            <li><a href="mailto:mayrozen45@gmail.com">mayrozen45@gmail.com</a></li>
-          </ul>
+          <h6><strong>Want more info? Here some links!</strong></h6>
+          <div class="about-links">
+            <a href="https://github.com/MayRozen/App-Research-Algorithms#readme" target="_blank" rel="noopener" title="Project README">
+              <img src="{{ url_for('static', filename='images/icons/info_logo.png') }}" alt="Project README">
+              <div class="about-caption">README</div>
+            </a>
+
+            <a href="https://github.com/MayRozen" target="_blank" rel="noopener" title="GitHub">
+              <img src="{{ url_for('static', filename='images/icons/github_logo.png') }}" alt="GitHub">
+              <div class="about-caption">GitHub</div>
+            </a>
+
+            <a href="https://www.linkedin.com/in/may-rozen-4b07bb324?" target="_blank" rel="noopener" title="LinkedIn">
+              <img src="{{ url_for('static', filename='images/icons/linkedin_logo.webp') }}" alt="LinkedIn">
+              <div class="about-caption">LinkedIn</div>
+            </a>
+
+            <a href="mailto:mayrozen45@gmail.com" title="Email">
+              <img src="{{ url_for('static', filename='images/icons/mail_logo.webp') }}" alt="Email">
+              <div class="about-caption">Email</div>
+            </a>
+          </div>
         </div>
         <div class="modal-footer">
           <button
@@ -139,7 +143,7 @@
   </div>
 </div>
 
-  <!-- Client-side validation script for setup page -->
+  <!-- Client-side validation script -->
   <script>
   document.addEventListener('DOMContentLoaded', () => {
     const playersInput = document.getElementById('num_players');

@@ -2,59 +2,70 @@
 
 {% extends "layout.html" %}
 {% block content %}
-
-  <!-- Button to open the window "show logs" -->
-  <button
-    type="button"
-    class="btn btn-primary mb-3"
-    data-bs-toggle="modal"
-    data-bs-target="#logsModal"
-  >
-    Show Logs
-  </button>
-
-  <!-- Styled final allocation header matching valuations page -->
-  <div id="finalAllocationMessage" class="text-center mb-4" style="color:#FF0000; font-family:'Pacifico', cursive; font-size:1.5rem; font-weight:normal;">
-    Final Allocation
+<div class="top-actions">
+  <div class="left">
+    <button type="button" class="back-btn" onclick="history.back()">↩ Back</button>
   </div>
 
-  <!-- flex container: left=list, right=buttons -->
-  <div class="d-flex justify-content-center align-items-start">
-    <!-- Left: players and gifts list -->
-    <ul class="list-group">
-      {% for player, gifts in allocation.items() %}
-        <li class="list-group-item">
-          {{ player }} → {{ gifts|sort|join(', ') }}
-        </li>
-      {% endfor %}
-    </ul>
+  <div></div>
 
-    <button
-    class="explanation-text btn mb-4"
-    type="button"
-    data-bs-toggle="collapse"
-    data-bs-target="#sumList"
-    aria-expanded="false"
-    aria-controls="sumList"
-  >
-    Show Sum of Values
+ <div class="right">
+    <a href="{{ url_for('setup') }}" class="back-btn">⟲ Start Over</a>
+  </div>
+</div>
+
+<!-- Styled final allocation header matching valuations page -->
+<div id="finalAllocationMessage" class="explanation-text text-center mb-4">
+  Final Allocation
+</div>
+
+<!-- Centered grid: one column per player -->
+<div class="final-grid" id="finalGrid">
+  {% for player, gifts in allocation.items() %}
+    <div class="final-col">
+      <div class="player-card">
+        <div class="player-name">{{ player|replace('_',' ') }}</div>
+        <div class="allocation">→ {{ gifts|sort|join(', ') | replace('c', 'Gift ') }}</div>
+
+        <div class="sum-row">
+          <img class="money-img" src="{{ url_for('static', filename='images/money.png') }}" alt="money">
+          <span class="sum-value">
+            {% if sum_values[player] is defined %}
+              {{ sum_values[player] }}
+            {% else %}
+              0
+            {% endif %}
+          </span>
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+</div>
+
+
+<!-- Toggle button -->
+<div class="w-100 d-flex justify-content-center mt-3">
+  <button class="sum-toggle-btn" type="button" onclick="toggleSums()">
+    Σ Show Sum of Values
   </button>
+</div>
 
-  <!-- the sum-values -->
-  <div class="collapse" id="sumList">
-    <ul class="list-group mb-4">
-      {% for player, total in sum_values.items() %}
-        <li class="list-group-item">
-          {{ player }} → {{ total }}
-        </li>
-      {% endfor %}
-    </ul>
+
+<div>
+    <!-- Button to open the window "show logs" -->
+  <div class="w-100 d-flex justify-content-center mt-4">
+    <button type="button" class="gift-btn action-btn" data-bs-toggle="modal" data-bs-target="#logsModal">
+      <span>Show Logs</span>
+      <img src="{{ url_for('static', filename='images/santa-claus.png') }}" alt="logs">
+    </button>
   </div>
 
-  <a href="{{ url_for('setup') }}" class="btn btn-link mt-3">Start Over</a>
 
   <!-- Logs Modal -->
-  <div class="modal fade" id="logsModal" tabindex="-1" aria-labelledby="logsModalLabel" aria-hidden="true">
+  <div class="modal fade" id="logsModal"
+     data-bs-scroll="true"
+     data-bs-backdrop="false"
+     tabindex="-1" aria-labelledby="logsModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-scrollable">
       <div class="modal-content">
         <div class="modal-header">
@@ -70,6 +81,15 @@
       </div>
     </div>
   </div>
+</div>
 
+
+<script>
+  function toggleSums() {
+    document.querySelectorAll('.player-card').forEach(card => {
+      card.classList.toggle('show-sum');
+    });
+  }
+</script>
 
 {% endblock %}

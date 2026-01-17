@@ -9,11 +9,11 @@
     <!-- Page title -->
     <title>Santa Claus Algorithm</title>
 
-    <!-- Google Fonts: Pacifico for titles, Roboto for body text -->
+    <!-- Google Fonts: Pacifico for main title, Assistant for readable body text -->
     <link
-      href="https://fonts.googleapis.com/css2?family=Pacifico&family=Roboto:wght@400;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Pacifico&family=Assistant:wght@300;400;600;700&display=swap"
       rel="stylesheet"
-    >
+    />
 
     <!-- Bootstrap CSS -->
     <link
@@ -23,42 +23,72 @@
     <style>
       /* Global background and base font */
       body {
-        background-image: url('{{ url_for('static', filename='images/snowflake.png') }}');
-        background-repeat: repeat;
-        background-size: auto;
-        font-family: 'Roboto', sans-serif;
+        font-family: 'Assistant', sans-serif;
+        background: linear-gradient(to bottom, #d4e4f0 0%, #e8f1f8 100%);
+        background-image:
+          repeating-linear-gradient(0deg, transparent, transparent 50px, rgba(200, 220, 235, 0.3) 50px, rgba(200, 220, 235, 0.3) 100px),
+          repeating-linear-gradient(90deg, transparent, transparent 50px, rgba(200, 220, 235, 0.3) 50px, rgba(200, 220, 235, 0.3) 100px);
+        min-height: 100vh;
+        position: relative;
+        overflow-x: hidden;
+        overflow-y: auto;
       }
-      h1 { /* Main title styling */
+
+      /* Snowflake pattern background */
+      body::before {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url('data:image/svg+xml,<svg width="120" height="120" xmlns="http://www.w3.org/2000/svg"><text x="10" y="35" font-size="40" fill="%23a0c5d9" opacity="0.7">❄</text><text x="70" y="80" font-size="35" fill="%23b0d0e0" opacity="0.6">❄</text><text x="35" y="100" font-size="30" fill="%23a8cad8" opacity="0.65">❄</text><text x="90" y="25" font-size="28" fill="%23adc8d5" opacity="0.6">❄</text></svg>');
+        background-repeat: repeat;
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      /* Main title styling */
+      h1 {
         font-family: 'Pacifico', cursive;
-        color: #FF0000;
+        color: #000000;
         font-size: 3rem;
       }
-      .form-container { /* Central form container styling */
-        position: absolute;
+
+      .form-container {
+        position: relative;
         top: 5rem;
         left: 0;
         right: 0;
         margin: 0 auto;
-        background-color: #EEF7FF; /* Light background */
-        padding: 3rem;
-        border-radius: .5rem;
+
+        background: rgba(180, 210, 230, 0.6);
+        border-radius: 20px;
+        padding: 30px;
         box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+
         max-width: 1000px;
-        width: 100%;
+        width: calc(100% - 2rem);
+
         display: flex;
         flex-direction: column;
         align-items: center;
         text-align: center;
+
+        z-index: 1;
       }
+
       /* Shared explanation styling */
       .explanation-text {
-        color: #FF0000;
-        font-family: 'Pacifico', cursive;
+        color: #000000;
+        font-family: 'Assistant', sans-serif;
         font-size: 1.5rem;
-        font-weight: normal;
+        font-weight: 500;
+        line-height: 1.6;
         text-align: center;
         margin-bottom: 1rem;
       }
+
       .title-wrapper {
         position: absolute;
         top: 0;
@@ -66,18 +96,367 @@
         transform: translateX(-50%);
         width: 100%;
         text-align: center;
+        z-index: 1;
       }
-      .title-wrapper h1 { /* Wrapper for centering the main title */
+
+      /* Wrapper for centering the main title */
+      .title-wrapper h1 {
         margin: 0;
         padding: 0;
       }
-      html, body { /* Ensure no unwanted margins or padding */
+
+      /* Ensure no unwanted margins or padding */
+      html, body {
         margin: 0;
         padding: 0;
       }
+
+      .gift-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.6rem;
+
+        border: 2px solid rgba(0,0,0,0.15);
+        border-radius: 999px;
+        padding: 0.85rem 1.1rem;
+
+        font-family: 'Assistant', sans-serif;
+        font-weight: 700;
+        font-size: 1.15rem;
+
+        box-shadow: 0 10px 22px rgba(0,0,0,0.12);
+        transition: transform 160ms ease, box-shadow 160ms ease, filter 160ms ease;
+      }
+
+      .gift-btn img {
+        width: 44px;
+        height: 44px;
+        object-fit: contain;
+        transition: transform 160ms ease;
+      }
+
+      .gift-btn:not(:disabled) {
+        background: #007E6E;
+        border-color: rgba(0,0,0,0.1);
+        color: white;
+      }
+
+      .gift-btn:hover:not(:disabled) {
+        transform: translateY(-3px);
+        box-shadow: 0 16px 28px rgba(0,0,0,0.16);
+        filter: brightness(1.03);
+      }
+
+      .gift-btn:hover:not(:disabled) img {
+        transform: rotate(-8deg) scale(1.05);
+      }
+
+      .gift-btn:disabled {
+        background: #ffffff;
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+
+      /* Hide number input spinners ONLY inside valuations (no-spinners scope) */
+      .no-spinners input[type="number"]::-webkit-outer-spin-button,
+      .no-spinners input[type="number"]::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
+
+      .no-spinners input[type="number"] {
+        -moz-appearance: textfield;
+        appearance: textfield;
+      }
+
+      /* unified main action buttons */
+      .action-btn{
+        width: 320px;
+        justify-content: center;
+      }
+
+      .back-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+
+        padding: 0.45rem 0.75rem;
+        border-radius: 999px;
+
+        background: #ffffff;
+        border: 2px solid rgba(0,0,0,0.15);
+
+        font-family: 'Assistant', sans-serif;
+        font-weight: 700;
+        color: #000;
+        text-decoration: none;
+
+        box-shadow: 0 6px 14px rgba(0,0,0,0.10);
+        transition: transform 140ms ease, box-shadow 140ms ease, filter 140ms ease;
+      }
+
+      .back-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 18px rgba(0,0,0,0.14);
+        filter: brightness(1.02);
+        text-decoration: none;
+      }
+
+      .back-btn img {
+        width: 22px;
+        height: 22px;
+        object-fit: contain;
+      }
+
+      .top-actions {
+        width: 100%;
+        display: grid;
+        grid-template-columns: 1fr auto 1fr;
+        align-items: center;
+        margin-bottom: 1rem;
+      }
+
+      .top-actions .left {
+        justify-self: start;
+      }
+
+      .top-actions .right {
+        justify-self: end;
+      }
+
+      .about-links{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 14px;
+        margin-top: 12px;
+        flex-wrap: wrap;
+      }
+
+      .about-links a{
+        width: 42px;
+        height: 42px;
+        border-radius: 999px;
+        background: rgba(255,255,255,0.9);
+        border: 1px solid rgba(0,0,0,0.12);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 6px 14px rgba(0,0,0,0.10);
+        transition: transform 140ms ease, box-shadow 140ms ease;
+        text-decoration: none;
+      }
+
+      .about-links a:hover{
+        transform: translateY(-2px);
+        box-shadow: 0 10px 18px rgba(0,0,0,0.14);
+      }
+
+      .about-links img{
+        width: 26px;
+        height: 26px;
+        object-fit: contain;
+        display: block;
+      }
+
+      .about-links a{
+        width: 92px;
+        height: auto;
+        flex-direction: column;
+        padding: 10px 8px;
+        gap: 6px;
+        text-align: center;
+      }
+
+      .about-caption{
+        font-size: 0.85rem;
+        font-weight: 700;
+        color: #000;
+        line-height: 1.1;
+      }
+
+      .br-mobile{ display: none; }
+      .br-desktop{ display: inline; }
+
+      /* Final allocation grid centered */
+      .final-grid{
+        width: 100%;
+        max-width: 820px;
+        margin: 0 auto;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 22px;
+        justify-content: center;
+      }
+
+      /* Card sizing and look */
+      .player-card{
+        width: 170px;
+        border-radius: 14px;
+        background: rgba(255,255,255,0.9);
+        border: 1px solid rgba(0,0,0,0.08);
+        box-shadow: 0 10px 22px rgba(0,0,0,0.10);
+        padding: 18px 16px;
+        text-align: center;
+      }
+
+      .player-name{
+        font-weight: 800;
+        font-size: 1.05rem;
+        margin-bottom: 6px;
+      }
+
+      .allocation{
+        font-weight: 600;
+        font-size: 0.95rem;
+        color: rgba(0,0,0,0.65);
+        margin-bottom: 10px;
+      }
+
+      /* Sum row inside the card (hidden until toggle) */
+      .sum-row{
+        display: none;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        border-top: 1px solid rgba(0,0,0,0.10);
+        padding-top: 10px;
+        margin-top: 10px;
+      }
+
+      .player-card.show-sum .sum-row{
+        display: flex;
+      }
+
+      .money-img{
+        width: 18px;
+        height: 18px;
+        object-fit: contain;
+      }
+
+      .sum-value{
+        font-weight: 800;
+        color: #2f6fed;
+      }
+
+      /* White pill button */
+      .sum-toggle-btn{
+        background: #ffffff;
+        border: 1px solid rgba(0,0,0,0.12);
+        padding: 10px 18px;
+        border-radius: 999px;
+        font-weight: 700;
+        font-size: 0.95rem;
+        box-shadow: 0 8px 18px rgba(0,0,0,0.08);
+        cursor: pointer;
+      }
+
+/*------------------------- media -------------------------*/
+      @media (max-width: 680px){
+
+        body.home img[src*="santa_gifts"]{
+          display: none;
+        }
+
+        /* Put Santa AFTER the intro text */
+        body.home .explanation-text::after{
+          content: "";
+          display: block;
+
+          width: min(240px, 70vw);
+          height: min(240px, 70vw);
+
+          margin: 14px auto 18px;
+
+          background-image: url("/static/images/santa_gifts.png");
+          background-repeat: no-repeat;
+          background-position: center;
+          background-size: contain;
+
+          pointer-events: none;
+        }
+
+        .form-container{
+          margin: 5.2rem auto 1.2rem;
+          padding: 18px;
+          border-radius: 16px;
+        }
+
+        h1{
+          font-size: 2.2rem;
+        }
+
+        .explanation-text{
+          font-size: 1.15rem;
+          text-align: center;
+        }
+
+        .br-mobile{ display: inline; }
+        .br-desktop{ display: none; }
+
+        .action-btn{
+          width: 100%;
+        }
+
+        .final-grid{
+          gap: 14px;
+        }
+
+        .player-card{
+          width: 160px;
+        }
+     }
+
+    @media (max-width: 820px){
+
+      body.valuations{
+        overflow-x: visible;
+      }
+
+      body.valuations .valuations-table-wrap{
+        width: 100%;
+        overflow-x: auto;
+        overflow-y: hidden;
+        -webkit-overflow-scrolling: touch;
+        touch-action: pan-x;
+      }
+
+      body.valuations .valuations-table-wrap table{
+        width: max-content;
+        min-width: 100%;
+      }
+
+      body.valuations th,
+      body.valuations td{
+        white-space: nowrap;
+        min-width: 60px;
+      }
+
+      body.valuations .valuation-input{
+        width: 60px;
+        min-width: 60px;
+        display: inline-block;
+        text-align: left;
+      }
+
+      body.valuations table thead th:first-child{
+        position: sticky;
+        left: 0;
+        z-index: 3;
+        background: #f8f9fa;
+      }
+
+      body.valuations table tbody th{
+        position: sticky;
+        left: 0;
+        z-index: 2;
+        background: rgba(255,255,255,0.95);
+      }
+    }
     </style>
   </head>
-  <body style="position: relative; min-height: 100vh;">
+  <body class="{% block body_class %}{% endblock %}">
     <div class="title-wrapper"> <!-- Centered title header -->
       <h1>Santa Claus Algorithm</h1>
     </div>
