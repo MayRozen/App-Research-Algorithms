@@ -143,8 +143,8 @@ pip install git+https://github.com/ariel-research/fairpyx.git
 
 # Run the web app
 python app.py
-
+```
 Then open: http://127.0.0.1:5000
 
-```
+
 
